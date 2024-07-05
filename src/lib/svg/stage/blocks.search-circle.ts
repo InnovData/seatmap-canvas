@@ -51,7 +51,7 @@ export default class BlocksSearchCircle extends SvgBase {
 
         this.clear();
         this.circle = new Circle(this);
-        this.addChild(this.circle);
+        // this.addChild(this.circle);
         this.updateChilds();
 
 

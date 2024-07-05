@@ -55,7 +55,8 @@ export default class Block extends SvgBase {
                 this.infosToCenter();
             } else if (levelObject.level === ZoomLevel.BLOCK) {
                 this.mask.blockLevelMask.hide();
-                this.mask.seatLevelMask.show();
+                this.mask.seatLevelMask.hide();
+                this.seats.resetSeatsColors(false);
                 this.infosToTop();
             } else if (levelObject.level === ZoomLevel.SEAT) {
                 this.mask.blockLevelMask.hide();
@@ -73,37 +74,37 @@ export default class Block extends SvgBase {
         });
 
 
-        // grid search
-        this.global.eventManager.addEventListener(EventType.MOUSEMOVE_BLOCK, (block_item: Block) => {
+        // // grid search
+        // this.global.eventManager.addEventListener(EventType.MOUSEMOVE_BLOCK, (block_item: Block) => {
 
-            if (!this.parent.parent.searchCircle.is_enable) return;
-            if (this.global.multi_select) return;
-            let cor = d3Mouse(this.parent.parent.blocks.node.node());
-            let gap = this.global.config.zoom_focus_circle_radius;
+        //     if (!this.parent.parent.searchCircle.is_enable) return;
+        //     if (this.global.multi_select) return;
+        //     let cor = d3Mouse(this.parent.parent.blocks.node.node());
+        //     let gap = this.global.config.zoom_focus_circle_radius;
 
-            if (this.global.zoomManager.zoomLevel === ZoomLevel.BLOCK) {
-                for (let i = 0; i < block_item.seats.getSeatsCount(); i++) {
-                    let _seat = block_item.seats.getSeatByIndex(i);
-                    let _item: SeatModel = _seat.item;
-                    let color = _seat.getColor();
-                    if (_seat.isSelected()) {
-                        color = _seat.getColor(SeatAction.SELECT);
-                    } else {
-                        if ((_item.x - gap < cor[0] && _item.x + gap > cor[0]) && (_item.y - gap < cor[1] && _item.y + gap > cor[1])) {
-                            color = _seat.getColor(SeatAction.FOCUS);
-                        }
-                        _seat.setColor(color);
-                    }
+        //     if (this.global.zoomManager.zoomLevel === ZoomLevel.BLOCK) {
+        //         for (let i = 0; i < block_item.seats.getSeatsCount(); i++) {
+        //             let _seat = block_item.seats.getSeatByIndex(i);
+        //             let _item: SeatModel = _seat.item;
+        //             let color = _seat.getColor();
+        //             if (_seat.isSelected()) {
+        //                 color = _seat.getColor(SeatAction.SELECT);
+        //             } else {
+        //                 if ((_item.x - gap < cor[0] && _item.x + gap > cor[0]) && (_item.y - gap < cor[1] && _item.y + gap > cor[1])) {
+        //                     color = _seat.getColor(SeatAction.FOCUS);
+        //                 }
+        //                 _seat.setColor(color);
+        //             }
 
 
-                }
-            }
-        });
+        //         }
+        //     }
+        // });
 
-        this.global.eventManager.addEventListener(EventType.MOUSELEAVE_BLOCK, (block_item: Block) => {
-            this.seats.resetSeatsColors()
+        // this.global.eventManager.addEventListener(EventType.MOUSELEAVE_BLOCK, (block_item: Block) => {
+        //     this.seats.resetSeatsColors()
 
-        })
+        // })
 
         // grid search
         // this.global.eventManager.addEventListener(EventType.TOUCHSTART_BLOCK, (block_item: Block) => {

@@ -90,7 +90,7 @@ export class SeatMapCanvas {
             if (zoom_level.level === ZoomLevel.VENUE) {
                 d3Select(this.config.zoom_out_button).style("display", "none");
             } else if (zoom_level.level === ZoomLevel.BLOCK) {
-                d3Select(this.config.zoom_out_button).style("display", "none");
+                d3Select(this.config.zoom_out_button).style("display", "block");
             } else if (zoom_level.level === ZoomLevel.SEAT) {
                 d3Select(this.config.zoom_out_button).style("display", "block");
             }
