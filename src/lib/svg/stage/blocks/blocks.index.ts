@@ -8,7 +8,7 @@ import {polygonHull} from 'd3-polygon'
 import StageManager from "../stage.index";
 import Block from "./block-item/block-item.index";
 import SvgBase from "../../svg.base";
-import {dom} from "../../../decorators/dom";
+import {boundingBox, boundingBoxToPolygon, dom} from "../../../decorators/dom";
 import SeatModel from "../../../models/seat.model";
 import {SeatItem} from "./block-item/seat/seat-item.index";
 import BlockModel from "../../../models/block.model";
@@ -43,7 +43,11 @@ export default class Blocks extends SvgBase {
             }
 
             let bound_items: Array<any> = _seats.map((item: SeatModel) => [item.x, item.y]).concat(block_item.labels.map((item: LabelModel) => [item.x, item.y]));
-            block_item.bounds = polygonHull(bound_items);
+            if (this.parent.global.config.is_polygon) {
+                block_item.bounds = polygonHull(bound_items);
+            } else {
+                block_item.bounds = boundingBoxToPolygon(boundingBox(polygonHull(bound_items)));
+            }
 
             this.addChild(_blockItem);
         });

@@ -4,7 +4,7 @@
  */
 
 import SvgBase from "../../../svg.base";
-import {dom} from "../../../../decorators/dom";
+import {boundingBox, dom} from "../../../../decorators/dom";
 import BlockModel from "../../../../models/block.model";
 import Block from "./block-item.index";
 import {BlockTitle} from "./info/title";
@@ -22,8 +22,13 @@ export default class BlockInfo extends SvgBase {
     constructor(public parent: Block, public item: BlockModel) {
         super(parent);
         this.attr("opacity", 0);
-        let x = ((this.item.bounds[1][0] - this.item.bounds[2][0]) / 2) + this.item.bounds[2][0];
-        let y = ((this.item.bounds[0][1] - this.item.bounds[1][1]) / 2) + this.item.bounds[1][1];
+
+        const bbox = boundingBox(this.item.bounds);
+        let x = (bbox[0][0] + bbox[1][0]) / 2;
+        let y = (bbox[0][1] + bbox[1][1]) / 2;
+
+        // let x = ((this.item.bounds[1][0] - this.item.bounds[2][0]) / 2) + this.item.bounds[2][0];
+        // let y = ((this.item.bounds[0][1] - this.item.bounds[1][1]) / 2) + this.item.bounds[1][1];
         this.attr("transform", "translate(" + [x, y] + ")");
         return this;
     }

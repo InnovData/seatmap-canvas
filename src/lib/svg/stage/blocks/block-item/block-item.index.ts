@@ -7,7 +7,7 @@ import {mouse as d3Mouse} from 'd3-selection'
 
 import BlocksManager from "../blocks.index";
 import SvgBase from "../../../svg.base";
-import {dom} from "../../../../decorators/dom";
+import {dom, boundingBox} from "../../../../decorators/dom";
 import BlockModel from "../../../../models/block.model";
 import Seats from "./block-item.seats.index";
 import BlockInfo from "./block-item.info.index";
@@ -144,12 +144,16 @@ export default class Block extends SvgBase {
         this.info = new BlockInfo(this, this.item);
         this.addChild(this.info);
 
+        const bbox = boundingBox(this.item.bounds);
+        this.center_position.x = (bbox[0][0] + bbox[1][0]) / 2;
+        this.center_position.y = (bbox[0][1] + bbox[1][1]) / 2;
 
-        this.center_position.x = ((this.item.bounds[1][0] - this.item.bounds[2][0]) / 2) + this.item.bounds[2][0];
-        this.center_position.y = ((this.item.bounds[0][1] - this.item.bounds[1][1]) / 2) + this.item.bounds[1][1];
+        // this.center_position.x = ((this.item.bounds[1][0] - this.item.bounds[2][0]) / 2) + this.item.bounds[2][0];
+        // this.center_position.y = ((this.item.bounds[0][1] - this.item.bounds[1][1]) / 2) + this.item.bounds[1][1];
 
         this.top_position.x = this.center_position.x;
-        this.top_position.y = (this.item.bounds[1][1] - 60);
+        // this.top_position.y = (this.item.bounds[1][1] - 60);
+        this.top_position.y = (bbox[0][1] - 60);
 
 
         // update childs

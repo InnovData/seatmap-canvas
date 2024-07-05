@@ -1,6 +1,6 @@
 {
-  "name": "@alisaitteke/seatmap-canvas",
-  "version": "2.5.15",
+  "name": "@InnovData/seatmap-canvas",
+  "version": "2.5.18",
   "tags": "seating, seat, seatmap, seat-selection, seat-booking, booking, ticket, reservation",
   "author": "Ali Sait TEKE <alisaitt@gmail.com>",
   "homepage": "https://github.com/alisaitteke/seatmap-canvas",
@@ -12,10 +12,6 @@
   ],
   "private": false,
   "description": "Seatmap Canvas is an advanced, open-source library for interactive seat selection in various settings such as stadiums, theaters, and event spaces. Designed with d3.js, this code version is optimized for developers looking for a customizable and efficient solution to handle seat arrangements and user interactions.",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alisaitteke/seatmap-canvas.git"
-  },
   "sideEffects": false,
   "scripts": {
     "start:dev": "rollup --config --watch --bundleConfigAsCjs",
@@ -23,6 +19,14 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "publishConfig": {
+      "registry": "https://npm.pkg.github.com/InnovData"
+  },
+  "repository": {
+      "type": "git",
+      "url": "ssh://git@github.com:InnovData/sassy.git",
+      "directory": "@InnovData/sassy"
   },
   "license": "MIT",
   "main": "dist/cjs/seatmap.canvas.js",

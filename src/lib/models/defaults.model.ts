@@ -32,6 +32,7 @@ export default class DefaultsModel {
     zoom_out_button: string;
     legend: boolean = false;
     canvas_stageout_control: boolean = true;
+    is_polygon: boolean = true;
 
     style: StyleConfig
 
@@ -52,6 +53,7 @@ export default class DefaultsModel {
         this.zoom_out_button = config.zoom_out_button ? config.zoom_out_button : ".zoom-out-button";
         this.legend = config.legend == false ? config.legend : true;
         this.canvas_stageout_control = config.canvas_stageout_control == false ? config.canvas_stageout_control : true;
+        this.is_polygon = config.is_polygon == false ? config.is_polygon : true;
 
 
         this.style = new StyleConfig()

@@ -42,3 +42,4 @@ build/*
 dist/*
 yarn.lock
 cog.toml
+.npmrc

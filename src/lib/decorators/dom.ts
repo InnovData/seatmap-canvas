@@ -38,3 +38,25 @@ export function dom(values: DomInterface) {
 
     }
 }
+
+export function boundingBox(polygon: any) {
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    
+    polygon.forEach((point: any) => {
+        if (point[0] < minX) minX = point[0];
+        if (point[1] < minY) minY = point[1];
+        if (point[0] > maxX) maxX = point[0];
+        if (point[1] > maxY) maxY = point[1];
+    });
+    
+    return [[minX, minY], [maxX, maxY]];
+}
+
+export function boundingBoxToPolygon (bbox: any) {
+    return [
+        bbox[0],
+        [bbox[1][0], bbox[0][1]],
+        bbox[1],
+        [bbox[0][0], bbox[1][1]]
+    ];
+};
