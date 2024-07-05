@@ -101,7 +101,6 @@ export default class Block extends SvgBase {
         });
 
         this.global.eventManager.addEventListener(EventType.MOUSELEAVE_BLOCK, (block_item: Block) => {
-            console.log(block_item)
             this.seats.resetSeatsColors()
 
         })

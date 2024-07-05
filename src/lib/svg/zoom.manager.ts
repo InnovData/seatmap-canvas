@@ -61,7 +61,6 @@ export default class ZoomManager {
 
     public init() {
 
-        console.log('zoom init')
         this.calculateZoomLevels();
         this.zoomInit();
         // this._self.eventManager.addEventListener(EventType.UPDATE_BLOCK, (blocks: Array<BlockModel>) => {
@@ -84,7 +83,6 @@ export default class ZoomManager {
     }
 
     zoomInit() {
-        console.info('zoomInit')
         this.zoomTypes.normal = d3Zoom()
             .scaleExtent([this._self.config.min_zoom, this._self.config.max_zoom])
             .on("end", this.zoomEnd(this))
@@ -105,7 +103,6 @@ export default class ZoomManager {
     }
 
     zoomEnd(_self: this): any {
-        console.info('zoomEnd')
         return function () {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
@@ -118,7 +115,6 @@ export default class ZoomManager {
     }
 
     animatedZoomEnd(_self: this): any {
-        console.info('animatedZoomEnd')
         return function () {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
@@ -130,7 +126,6 @@ export default class ZoomManager {
     }
 
     animatedFastZoomEnd(_self: this): any {
-        console.info('animatedFastZoomEnd')
         return function () {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
@@ -142,7 +137,6 @@ export default class ZoomManager {
     }
 
     zoomHand(_self: this): any {
-        console.info('zoomHand')
         return function () {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
@@ -153,7 +147,6 @@ export default class ZoomManager {
     }
 
     zoomHandAnimated(_self: this): any {
-        console.info('zoomHandAnimated')
         return function () {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
@@ -165,7 +158,6 @@ export default class ZoomManager {
     }
 
     zoomHandFastAnimated(_self: this): any {
-        console.info('zoomHandFastAnimated')
         return function () {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
@@ -177,7 +169,6 @@ export default class ZoomManager {
     }
 
     calculateZoomLevel(k: number) {
-        console.info('calculateZoomLevel')
         let _levels = {
             seat: this._self.config.max_zoom - 0.2,
             block: this.zoomLevels.BLOCK.k,
@@ -224,7 +215,6 @@ export default class ZoomManager {
 
     public calculateZoomLevels(blocks: Array<BlockModel> = this._self.data.getBlocks()): this {
 
-        console.info('calculateZoomLevels')
         let _wm = this._self.windowManager;
         let _stage = _wm.stage;
 
@@ -386,7 +376,6 @@ export default class ZoomManager {
 
     public zoomToVenue(animation: boolean = true, fastAnimated: boolean = false) {
 
-        console.info('zoomToVenue')
         let x = this.zoomLevels.VENUE.x;
         let y = this.zoomLevels.VENUE.y;
         let k = this.zoomLevels.VENUE.k;

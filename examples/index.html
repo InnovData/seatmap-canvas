@@ -116,6 +116,12 @@
     $(document).ready(function () {
         let seatmap = new SeatMapCanvas("#seats_container", {
             legend: true,
+            zoom_focus_circle_radius: 0,
+            lang: {
+                selectable: "Sélectionnable",
+                non_selectable:  "Non sélectionnable ou réservé",
+                your_selection:"Votre Sélection",
+            },
             style: {
                 seat: {
                     hover: '#8fe100',
