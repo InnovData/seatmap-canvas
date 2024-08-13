@@ -169,30 +169,35 @@ export default class ZoomManager {
     }
 
     calculateZoomLevel(k: number) {
-        let _levels = {
-            seat: this._self.config.max_zoom - 0.2,
-            block: this.zoomLevels.BLOCK.k,
-            venue: this.zoomLevels.VENUE.k
-        };
 
-        let _zoomLevel: ZoomLevel | null = null;
-
-        let blocks_count = this._self.data.getBlocks().length;
-
-        if (k >= _levels.seat) {
-            _zoomLevel = ZoomLevel.SEAT;
-
-        } else if (k >= _levels.block) {
-            _zoomLevel = ZoomLevel.BLOCK;
-
-        } else if (k >= _levels.venue && blocks_count > 1) {
-            _zoomLevel = ZoomLevel.VENUE;
+        if (this.zoomLevels && this.zoomLevels.BLOCK && this.zoomLevels.VENUE) {
+            let _levels = {
+                seat: this._self.config.max_zoom - 0.2,
+                block: this.zoomLevels.BLOCK.k,
+                venue: this.zoomLevels.VENUE.k
+            };
+    
+            let _zoomLevel: ZoomLevel | null = null;
+    
+            let blocks_count = this._self.data.getBlocks().length;
+    
+            if (k >= _levels.seat) {
+                _zoomLevel = ZoomLevel.SEAT;
+    
+            } else if (k >= _levels.block) {
+                _zoomLevel = ZoomLevel.BLOCK;
+    
+            } else if (k >= _levels.venue && blocks_count > 1) {
+                _zoomLevel = ZoomLevel.VENUE;
+            }
+    
+            if (_zoomLevel !== this.zoomLevel) {
+                this.zoomLevel = _zoomLevel as ZoomLevel;
+                this.dispatchZoomEvent();
+            }
         }
 
-        if (_zoomLevel !== this.zoomLevel) {
-            this.zoomLevel = _zoomLevel as ZoomLevel;
-            this.dispatchZoomEvent();
-        }
+        
     }
 
     canvasScopeHandler() {

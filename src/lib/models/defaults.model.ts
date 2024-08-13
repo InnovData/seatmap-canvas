@@ -43,6 +43,14 @@ export default class DefaultsModel {
         your_selection: string
     };
 
+    imageBg: {
+        url: string,
+        width: number,
+        height: number,
+        x: number,
+        y: number
+    };
+
     constructor(config: any) {
 
         this.zoom_focus_circle_radius = config.zoom_focus_circle_radius ? config.zoom_focus_circle_radius : this.zoom_focus_circle_radius;
@@ -68,13 +76,19 @@ export default class DefaultsModel {
 
         }
 
-
         this.lang = {
             selectable: config.lang && config.lang.selectable || "Selectable",
             non_selectable: config.lang && config.lang.non_selectable || "Non Selectable or Rezerved",
             your_selection: config.lang && config.lang.your_selection || "Your Selection",
         };
 
+        this.imageBg = {
+            x: config.imageBg && config.imageBg.x || 0,
+            y: config.imageBg && config.imageBg.y || 0,
+            width: config.imageBg && config.imageBg.width || 0,
+            height: config.imageBg && config.imageBg.height || 0,
+            url: config.imageBg && config.imageBg.url || ''
+        };
 
     }
 
