@@ -45,6 +45,11 @@ export class SeatItem extends SvgBase {
         return this;
     }
 
+    public setClass(classe: string): this {
+        this.circle.node.attr("class", classe);
+        return this;
+    }
+
     public updateColor(color: string | null = null): this {
         this.setColor(this.getColor());
         return this;

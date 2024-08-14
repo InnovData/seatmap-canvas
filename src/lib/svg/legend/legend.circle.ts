@@ -20,6 +20,7 @@ export default class LegendCircle extends SvgBase {
         super(parent);
         this.attr("r", this.global.config.style.legend.radius);
         this.attr("fill", this.parent.legend_data.color);
+        this.attr("class", 'seat-circle');
     }
 
     update() {

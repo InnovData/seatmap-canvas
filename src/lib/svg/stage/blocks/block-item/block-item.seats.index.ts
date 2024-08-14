@@ -75,6 +75,8 @@ export default class Seats extends SvgBase {
             if (!_seat.isSelected() && _seat.isSalable()) {
                 color = _seat.getColor(SeatAction.LEAVE);
                 _seat.setColor(color, animation);
+            } else {
+                _seat.setClass('seat-reserved seat-circle');
             }
         }
     }
