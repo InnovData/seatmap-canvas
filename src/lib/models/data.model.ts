@@ -99,6 +99,36 @@ export default class DataModel {
 
     }
 
+    public getSeatAllBlocks(seatId: string | number): SeatModel | null {
+        let blocks = this.getBlocks();
+        if (blocks.length > 0) {
+
+            let currentSeat = null;
+
+            for (let block of blocks) {
+                for (let seat of block.seats) {
+                    if (seat.id == seatId) {
+                        currentSeat = seat;
+                        break;
+                    }
+                }
+
+                if (currentSeat) {
+                    break;
+                }
+            }
+            if (currentSeat)
+                return currentSeat
+            else {
+                return null
+            }
+        } else {
+            console.error(new Error('Block not found!'));
+            new Error('Block not found')
+            return null;
+        }
+
+    }
     public getSelectedSeats(blockId?: string): Array<SeatModel> {
         let blocks = this.getBlocks(blockId);
         let selectedSeats: Array<SeatModel> = [];
