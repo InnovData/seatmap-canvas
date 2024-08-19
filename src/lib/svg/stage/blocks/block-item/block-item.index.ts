@@ -51,29 +51,17 @@ export default class Block extends SvgBase {
             if (levelObject.level === ZoomLevel.VENUE) {
                 this.mask.blockLevelMask.show();
                 this.mask.seatLevelMask.show();
-                this.seats.resetSeatsColors(false);
                 this.infosToCenter();
             } else if (levelObject.level === ZoomLevel.BLOCK) {
                 this.mask.blockLevelMask.hide();
                 this.mask.seatLevelMask.hide();
-                this.seats.resetSeatsColors(false);
                 this.infosToTop();
             } else if (levelObject.level === ZoomLevel.SEAT) {
                 this.mask.blockLevelMask.hide();
                 this.mask.seatLevelMask.hide();
-                this.seats.resetSeatsColors(false);
                 this.infosToTop();
             }
         });
-
-        this.global.eventManager.addEventListener(EventType.MULTI_SELECT_ENABLE, () => {
-            this.seats.resetSeatsColors(false);
-        });
-        this.global.eventManager.addEventListener(EventType.MULTI_SELECT_DISABLE, () => {
-            this.seats.resetSeatsColors(false);
-        });
-
-
         // // grid search
         // this.global.eventManager.addEventListener(EventType.MOUSEMOVE_BLOCK, (block_item: Block) => {
 
@@ -110,10 +98,6 @@ export default class Block extends SvgBase {
         // this.global.eventManager.addEventListener(EventType.TOUCHSTART_BLOCK, (block_item: Block) => {
         //     console.log(block_item);
         // });
-
-        this.parent.node.on("mouseleave.seats", () => {
-            this.seats.resetSeatsColors(false);
-        });
 
         return this;
     }
@@ -186,7 +170,7 @@ export default class Block extends SvgBase {
             this.info.title.node
                 .transition()
                 .duration(this.global.config.animation_speed)
-                .attr("fill", this.item.color)
+                // .attr("fill", this.item.color)
 
         }
 
@@ -202,8 +186,8 @@ export default class Block extends SvgBase {
                 .attr("font-size", 32)
             this.info.title.node
                 .transition()
-                .duration(this.global.config.animation_speed)
-                .attr("fill", this.global.config.style.block.title_color);
+                .duration(this.global.config.animation_speed);
+                // .attr("fill", this.global.config.style.block.title_color)
         }
 
 

@@ -31,6 +31,9 @@
   }
 }
 
+.seatmap-tooltip {
+  display: none;
+}
 .seatmap-svg {
   position: relative;
   width: 100%;
@@ -78,10 +81,10 @@
     .stage {
       .blocks {
         .block {
-          filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.61));
+          // filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.61));
           &:hover {
             transform: scale(1.02);
-            filter: drop-shadow(0px 0px 14px rgba(0, 0, 0, 0.70));
+            // filter: drop-shadow(0px 0px 14px rgba(0, 0, 0, 0.70));
           }
           .masks {
             .venue-level-mask {
@@ -112,38 +115,40 @@
         transition-property: transform, filter;
         transition-duration: 0.17s;
         transition-timing-function: ease-in-out;
-        filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0));
+        // filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, 0));
         .bounds {
           .block-hull-border {
             stroke-linejoin: round;
-            opacity: 0.5;
+            fill: transparent;
           }
           .block-hull {
             stroke-linejoin: round;
             cursor: move;
+            fill: transparent;
+        
           }
         }
         .masks {
+          display: none;
           .venue-level-mask {
             @include trans();
             stroke-linejoin: round;
-            opacity: 1;
+            fill: transparent;
 
           }
           .block-level-mask {
             @include trans();
             stroke-linejoin: round;
-            opacity: 0.7;
+            fill: transparent;
           }
           .seat-level-mask {
             @include trans();
             stroke-linejoin: round;
-            opacity: 0;
+            fill: transparent;
           }
           .bound-hide {
             @include trans();
             pointer-events: none;
-            opacity: 0;
           }
         }
         .info {
@@ -151,6 +156,7 @@
             text-anchor: middle;
             dominant-baseline: central;
             pointer-events: none;
+            display: none;
           }
         }
         .seats {
@@ -198,9 +204,9 @@
       opacity: 0;
       @include trans(0.2s, 0);
       .circle {
-        fill: rgba(0, 0, 0, 0);
+        // fill: rgba(0, 0, 0, 0);
         pointer-events: none;
-        stroke: rgba(0, 0, 0, 0.4);
+        // stroke: rgba(0, 0, 0, 0.4);
         @include stroke-width(4)
       }
       &.hide {
@@ -220,6 +226,7 @@
 
   }
   .legend {
+    display: none;
     .legend-item {
       circle {
         stroke: #adadad;
@@ -232,3 +239,26 @@
     }
   }
 }
+
+.seatmap-svg {
+  .seat-circle {
+    stroke: #797d7f;
+    fill: #f0f7fa;
+    transition: transform .2s;
+  }
+
+  .selected .seat-circle{
+    fill: #77c2a1;
+  }
+  .hover .seat-circle{
+    fill: #7069ad;
+    transform: scale(1.2);
+  }
+  .salable .seat-circle{
+      fill: #f0f7fa;
+      opacity: 0.5;
+      transform: scale(0.6);
+  }
+}
+
+

@@ -35,30 +35,14 @@ export class SeatItem extends SvgBase {
         return this;
     }
 
-    public setColor(color: string, animation: boolean = false): this {
-        if (animation) {
-            this.circle.node.transition().duration(this.global.config.animation_speed).attr("fill", color);
-        } else {
-            this.circle.node.attr("fill", color);
-        }
-
-        return this;
-    }
-
     public setClass(classe: string): this {
         this.circle.node.attr("class", classe);
-        return this;
-    }
-
-    public updateColor(color: string | null = null): this {
-        this.setColor(this.getColor());
         return this;
     }
 
     public select(color: string | null = null): this {
         this.item.selected = true;
         this.node.classed("selected", true);
-        this.circle.node.attr("fill", this.global.config.style.seat.selected);
         this.check.show();
         return this;
     }
@@ -66,7 +50,6 @@ export class SeatItem extends SvgBase {
     public unSelect(): this {
         this.item.selected = false;
         this.node.classed("selected", false);
-        this.circle.node.attr("fill", this.global.config.style.seat.color);
         this.check.hide();
         return this;
     }
@@ -75,62 +58,30 @@ export class SeatItem extends SvgBase {
         return this.item.selected;
     }
 
+    public salable(): this {
+        this.item.salable = true;
+        this.node.classed("salable", false);
+        return this;
+    }
+
+    public unSalable(): this {
+        this.item.salable = false;
+        this.node.classed("salable", true);
+        return this;
+    }
+
     public isSalable(): Boolean {
         return this.item.salable;
     }
 
-    public hover() {
-        this.setColor(this.global.config.style.seat.hover);
+    public hoverOn () {
+        this.node.classed("hover", true);
     }
 
-    public blur() {
-        this.setColor(this.getColor());
+    public hoverOut () {
+        this.node.classed("hover", false);
     }
 
-    public getColor(action: SeatAction| null = null): string {
-
-        if (this.isSalable()) {
-
-            if (action == SeatAction.FOCUS) {
-                if (this.isSelected()) {
-                    return this.global.config.style.seat.focus_out;
-                } else {
-                    return this.global.config.style.seat.focus;
-                }
-
-            } else if (action == SeatAction.HOVER) {
-                if (this.isSelected()) {
-                    return this.global.config.style.seat.selected;
-                } else {
-                    return this.global.config.style.seat.hover;
-                }
-            }
-            else if (action == SeatAction.LEAVE) {
-                if (this.isSelected()) {
-                    return this.global.config.style.seat.selected;
-                } else {
-                    return this.global.config.style.seat.color;
-                }
-            }
-            else if (action == SeatAction.SELECT) {
-                if (this.isSelected()) {
-                    return this.global.config.style.seat.selected;
-                } else {
-                    return this.global.config.style.seat.selected;
-                }
-            } else {
-                if (this.isSelected()) {
-                    return this.global.config.style.seat.selected;
-                } else {
-                    return this.global.config.style.seat.color;
-                }
-            }
-
-        } else {
-            return this.global.config.style.seat.not_salable;
-        }
-
-    }
 
     update(): this {
         this.circle = new SeatItemCircle(this);
@@ -138,7 +89,9 @@ export class SeatItem extends SvgBase {
 
 
         this.check = new SeatItemCheck(this).addTo(this);
-
+        if (!this.isSalable()) {
+            this.unSalable();
+        }
         // this.title = new SeatItemTitle(this);
         // this.addChild(this.title);
 
@@ -151,7 +104,7 @@ export class SeatItem extends SvgBase {
     }
 
     afterGenerate(){
-        this.setColor(this.getColor());
+        // this.setColor(this.getColor());
         if(this.item.selected){
             this.check.show()
         }else{

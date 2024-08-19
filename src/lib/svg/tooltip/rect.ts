@@ -43,8 +43,8 @@ export default class TooltipRect extends SvgBase {
                 return d['y'];
             });
 
-        this.attr("fill", this.global.config.style.tooltip.bg);
-        this.attr("stroke", "rgba(0,0,0,0.3)");
+        // this.attr("fill", this.global.config.style.tooltip.bg);
+        // this.attr("stroke", "rgba(0,0,0,0.3)");
         this.attr("stroke-width", "1px");
         this.attr("opacity", 0.8);
 

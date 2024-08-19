@@ -150,11 +150,16 @@
 
         seatmap.eventManager.addEventListener("SEAT.CLICK", (seat) => {
             if (!seat.isSelected() && seat.item.salable === true) {
+                console.log('sssss')
                 seat.select()
             } else {
                 seat.unSelect()
             }
-
+            //if (seat.isSalable()) {
+              //  seat.unSalable()
+           // } else {
+            //    seat.salable()
+            //}
             updateSelectedSeats()
         });
 
@@ -228,6 +233,7 @@
             let seatId = $(this).attr('seat-id');
             let blockId = $(this).attr('block-id');
             let seat = seatmap.data.getSeat(seatId, blockId);
+            console.log(seat)
             seat.svg.unSelect()
             updateSelectedSeats()
         }

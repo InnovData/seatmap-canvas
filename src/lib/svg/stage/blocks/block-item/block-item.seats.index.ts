@@ -25,11 +25,11 @@ export default class Seats extends SvgBase {
 
         this.global.eventManager.addEventListener(EventType.MOUSEENTER_SEAT, (seat: SeatItem) => {
             if (this.global.multi_select) return;
-            seat.setColor(seat.getColor(SeatAction.HOVER));
+            seat.hoverOn();
             //this.global.zoomManager.zoomDisable();
         });
         this.global.eventManager.addEventListener(EventType.MOUSELEAVE_SEAT, (seat: SeatItem) => {
-            seat.setColor(seat.getColor());
+            seat.hoverOut();
             //this.global.zoomManager.zoomEnable();
         });
 
@@ -65,19 +65,4 @@ export default class Seats extends SvgBase {
         return this.child_items[index];
     }
 
-    public resetSeatsColors(animation: boolean = false) {
-        for (let i = 0; i < this.getSeatsCount(); i++) {
-            let _seat = this.getSeatByIndex(i);
-            let _item: SeatModel = _seat.item;
-
-            let color = _seat.getColor();
-
-            if (!_seat.isSelected() && _seat.isSalable()) {
-                color = _seat.getColor(SeatAction.LEAVE);
-                _seat.setColor(color, animation);
-            } else {
-                _seat.setClass('seat-reserved seat-circle');
-            }
-        }
-    }
 }

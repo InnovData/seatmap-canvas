@@ -25,7 +25,7 @@ export default class MultiSelectRect extends SvgBase {
         this.attr("y", 250);
 
         this.attr("fill", "none");
-        this.attr("stroke", "rgba(0,0,0,0.5)");
+        // this.attr("stroke", "rgba(0,0,0,0.5)");
         this.attr("stroke-width", "3px");
         this.attr("stroke-dasharray", "4");
     }
