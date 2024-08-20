@@ -4,7 +4,7 @@
  */
 
 import {mouse as d3Mouse, event as d3Event} from 'd3-selection'
-import {zoom as d3Zoom, zoomTransform} from 'd3-zoom'
+import {zoom as d3Zoom, zoomTransform, zoomIdentity} from 'd3-zoom'
 
 
 import {SeatMapCanvas} from "../canvas.index";
@@ -373,10 +373,15 @@ export default class ZoomManager {
     }
 
     public zoomTo(val: any, animation: boolean = true) {
+
         if (animation) {
-            this._self.svg.stage.node.interrupt().transition().duration(this._self.config.animation_speed / 2).attr("transform", "translate(" + val.x + "," + val.y + ")scale(" + val.k + ")");
+            this._self.svg.node.interrupt()
+                .transition()
+                .duration(this._self.config.animation_speed / 2)
+                .call(this.zoomTypes.normal.transform, zoomIdentity.translate(val.x, val.y).scale(val.k));
         } else {
-            this._self.svg.stage.node.interrupt().attr("transform", "translate(" + val.x + "," + val.y + ")scale(" + val.k + ")");
+            this._self.svg.node.interrupt()
+                .call(this.zoomTypes.normal.transform, zoomIdentity.translate(val.x, val.y).scale(val.k));
         }
     }
 
