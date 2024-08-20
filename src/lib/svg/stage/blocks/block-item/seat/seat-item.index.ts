@@ -40,7 +40,7 @@ export class SeatItem extends SvgBase {
         return this;
     }
 
-    public select(color: string | null = null): this {
+    public select(): this {
         this.item.selected = true;
         this.node.classed("selected", true);
         this.check.show();
@@ -91,6 +91,10 @@ export class SeatItem extends SvgBase {
         this.check = new SeatItemCheck(this).addTo(this);
         if (!this.isSalable()) {
             this.unSalable();
+        }
+        if (this.isSelected()) {
+            // this.select();
+            this.node.classed("selected", true);
         }
         // this.title = new SeatItemTitle(this);
         // this.addChild(this.title);
