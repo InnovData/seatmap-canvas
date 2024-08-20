@@ -4,7 +4,7 @@
  */
 
 import {mouse as d3Mouse, event as d3Event} from 'd3-selection'
-import {zoom as d3Zoom} from 'd3-zoom'
+import {zoom as d3Zoom, zoomTransform} from 'd3-zoom'
 
 
 import {SeatMapCanvas} from "../canvas.index";
@@ -37,6 +37,12 @@ export default class ZoomManager {
     };
 
     public scale: any = {
+        x: null,
+        y: null,
+        k: null
+    };
+
+    public transform: any = {
         x: null,
         y: null,
         k: null
@@ -107,6 +113,9 @@ export default class ZoomManager {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
             let k = d3Event.transform.k;
+            _self.transform.k = k;
+            _self.transform.y = y;
+            _self.transform.x = x;
             _self._self.svg.stage.node.interrupt().attr("transform", "translate(" + x + "," + y + ")scale(" + k + ")");
             _self.calculateActiveBlocks();
             _self.calculateZoomLevel(k);
@@ -119,6 +128,9 @@ export default class ZoomManager {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
             let k = d3Event.transform.k;
+            _self.transform.k = k;
+            _self.transform.y = y;
+            _self.transform.x = x;
             _self._self.svg.stage.node.interrupt().transition().duration(_self._self.config.animation_speed).attr("transform", "translate(" + x + "," + y + ")scale(" + k + ")");
             _self.calculateActiveBlocks();
             _self.calculateZoomLevel(k);
@@ -130,6 +142,9 @@ export default class ZoomManager {
             let x = d3Event.transform.x;
             let y = d3Event.transform.y;
             let k = d3Event.transform.k;
+            _self.transform.k = k;
+            _self.transform.y = y;
+            _self.transform.x = x;
             _self._self.svg.stage.node.interrupt().transition().duration(_self._self.config.animation_speed / 2).attr("transform", "translate(" + x + "," + y + ")scale(" + k + ")");
             _self.calculateActiveBlocks();
             _self.calculateZoomLevel(k);
@@ -353,6 +368,64 @@ export default class ZoomManager {
 
     }
 
+    public getCurrentZoom() {
+        return this.transform;
+    }
+
+    public zoomTo(val: any, animation: boolean = true) {
+        if (animation) {
+            this._self.svg.stage.node.interrupt().transition().duration(this._self.config.animation_speed / 2).attr("transform", "translate(" + val.x + "," + val.y + ")scale(" + val.k + ")");
+        } else {
+            this._self.svg.stage.node.interrupt().attr("transform", "translate(" + val.x + "," + val.y + ")scale(" + val.k + ")");
+        }
+    }
+
+    public zoomToSeat(id: string | number, animation: boolean = true) {
+
+        let _seat = null;
+
+        for (let block of this._self.data.getBlocks()) {
+            for (let seat of block.seats) {
+                if (seat.id == id) {
+                    _seat = seat;
+                    break;
+                }
+            }
+
+            if (_seat) {
+                break;
+            }
+        }
+        if (_seat &&  _seat.svg && this._self.windowManager.width && this._self.windowManager.height) {
+            let bbox = _seat.svg.node.node().getBBox();
+
+            let x = (this._self.windowManager.width / bbox.width) - ((this._self.windowManager.width / bbox.width) / 3);
+            let y = (this._self.windowManager.height / bbox.height) - ((this._self.windowManager.height / bbox.height) / 3);
+            let k = (x < y) ? x : y;
+
+            x += bbox.x + (bbox.width / 2);
+            y += bbox.y + (bbox.height / 2);
+
+            k = k > this._self.config.max_zoom ? this._self.config.max_zoom : k;
+
+            this.zoomLevels.SEAT =  {
+                x: x,
+                y: y,
+                k: k
+            };
+
+            if (animation) {
+                this._self.svg.node.interrupt().call(this.zoomTypes.animated.translateTo, x, y).call(this.zoomTypes.animated.scaleTo, k);
+            } else {
+                this._self.svg.node.interrupt().call(this.zoomTypes.normal.translateTo, x, y).call(this.zoomTypes.normal.scaleTo, k);
+            }
+            this.zoomLevel = ZoomLevel.SEAT;
+            this.dispatchZoomEvent();
+
+        }
+
+    }
+    
     public zoomToBlock(id: string | number, animation: boolean = true, fastAnimated: boolean = false) {
         let _block = this._self.data.getBlocks().find((block) => block.id.toString() === id.toString());
         if (_block) {

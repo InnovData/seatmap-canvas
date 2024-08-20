@@ -94,6 +94,24 @@
                     <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
                     Randomize
                 </button>
+                <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
+                        id="zoom-seat-btn"
+                        data-block-id="block-2">
+                    <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                    Zoom to seat
+                </button>
+                <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
+                        id="zoom-current-get-btn"
+                        data-block-id="block-2">
+                    <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                    Get current zoom
+                </button>
+                <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
+                        id="zoom-to-coord-btn"
+                        data-block-id="block-2">
+                    <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                    Zoom to coord
+                </button>
             </div>
         </div>
         <div id="seats_container" class="w-full flex-1 h-full"></div>
@@ -199,7 +217,6 @@
                         id: `s-${k}`,
                         x: x,
                         y: y,
-                        selected: true,
                         color: color, // can use item.color from json data
                         salable: salable,
                         custom_data: {
@@ -320,6 +337,19 @@
 
         $("#randomize-btn").on("click", function (a) {
             generateRandomBlocks()
+        });
+        $("#zoom-seat-btn").on("click", function (a) {
+            seatmap.zoomManager.zoomToSeat('s-0');
+        });
+        $("#zoom-current-get-btn").on("click", function (a) {
+            console.log(seatmap.zoomManager.getCurrentZoom());
+        });
+        $("#zoom-to-coord-btn").on("click", function (a) {
+            seatmap.zoomManager.zoomTo({
+                x:-2890.7746936003855,
+                y: 114.65159496123135,
+                k:1.9
+            });
         });
     });
 </script>
