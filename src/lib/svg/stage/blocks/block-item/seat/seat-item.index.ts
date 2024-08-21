@@ -93,8 +93,12 @@ export class SeatItem extends SvgBase {
             this.unSalable();
         }
         if (this.isSelected()) {
-            // this.select();
             this.node.classed("selected", true);
+        }
+        if (this.item.custom_data && this.item.custom_data.categorieIds && Array.isArray(this.item.custom_data.categorieIds)) {
+            this.item.custom_data.categorieIds.forEach((cat: any) => {
+                this.node.classed(`seat-category-${cat.id}`, true);
+            });
         }
         // this.title = new SeatItemTitle(this);
         // this.addChild(this.title);
