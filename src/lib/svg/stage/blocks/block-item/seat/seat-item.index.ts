@@ -82,6 +82,13 @@ export class SeatItem extends SvgBase {
         this.node.classed("hover", false);
     }
 
+    public setCustomData(data: any = {}): this {
+        this.item.custom_data = {
+            ...this.item.custom_data ? this.item.custom_data : {},
+            ...data
+        };
+        return this;
+    }
 
     update(): this {
         this.circle = new SeatItemCircle(this);

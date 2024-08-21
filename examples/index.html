@@ -112,6 +112,12 @@
                     <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
                     Zoom to coord
                 </button>
+                <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
+                        id="update-custom-data-btn"
+                        data-block-id="block-2">
+                    <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                    Update custom data
+                </button>
             </div>
         </div>
         <div id="seats_container" class="w-full flex-1 h-full"></div>
@@ -351,6 +357,12 @@
                 y: 114.65159496123135,
                 k:1.9
             });
+        });
+        $("#update-custom-data-btn").on("click", function (a) {
+            const seat = seatmap.data.getSeatAllBlocks('s-0');
+            seat.setCustomData({
+                test: 'efesfes'
+            })
         });
     });
 </script>
