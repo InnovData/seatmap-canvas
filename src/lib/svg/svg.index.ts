@@ -4,7 +4,8 @@
  */
 
 import Stage from "./stage/stage.index";
-import {mouse as d3Mouse} from 'd3-selection'
+import {mouse as d3Mouse,event as d3Event, select as d3Select} from 'd3-selection'
+import {point as d3Event, xml} from 'd3'
 import "reflect-metadata";
 
 import {SeatMapCanvas} from "../canvas.index";
@@ -29,6 +30,9 @@ export default class Svg extends SvgBase {
     public zoomOutBg: ZoomOutBg;
     public legend: Legend;
     public tooltip: Tooltip;
+    public selectionBox: any;
+    public isSelectingZone: boolean;
+    public startPointZone: boolean;
 
 
     constructor(public parent: SeatMapCanvas) {
@@ -65,9 +69,137 @@ export default class Svg extends SvgBase {
             this.parent.eventManager.dispatch(EventType.MOUSE_MOVE, cor);
         })
 
+        // TODO Selection zone
+        this.selectionBox = null;
+        this.node.on("mousedown", () => {
+            if (d3Event.shiftKey) {
+
+                this.parent.zoomManager.zoomGlobalDisable();
+
+                // Start selection
+                this.startPointZone = d3Mouse(this.node.node());
+                console.log(this.startPointZone )
+                this.isSelectingZone = true;
+
+                if (!this.selectionBox) {
+                    this.selectionBox = this.node.append("rect")
+                        .attr("class", "selection");
+                }
+                this.selectionBox
+                    .attr("x", this.startPointZone[0])
+                    .attr("y", this.startPointZone[1])
+                    .attr("width", 0)
+                    .attr("height", 0);
+                    
+}
+        })
+        
+
+        this.node.on("mousemove", () => {
+            if (this.isSelectingZone) {
+                const currentPoint = d3Mouse(this.node.node());
+
+                const x = Math.min(this.startPointZone[0], currentPoint[0]);
+                const y = Math.min(this.startPointZone[1], currentPoint[1]);
+                const width = Math.abs(this.startPointZone[0] - currentPoint[0]);
+                const height = Math.abs(this.startPointZone[1] - currentPoint[1]);
+
+                this.selectionBox
+                    .attr("x", x)
+                    .attr("y", y)
+                    .attr("width", width)
+                    .attr("height", height);
+            }
+        });
+
+        this.node.on("mouseup", () => {
+            console.log('up')
+            if ( this.isSelectingZone) {
+                const [x, y, width, height] = [
+                    parseFloat( this.selectionBox.attr("x")),
+                    parseFloat( this.selectionBox.attr("y")),
+                    parseFloat( this.selectionBox.attr("width")),
+                    parseFloat( this.selectionBox.attr("height"))
+                ];
+
+                const selectionBounds = {
+                    x0: x,
+                    y0: y,
+                    x1: x + width,
+                    y1: y + height
+                };
+                var _self = this;
+
+                this.node.selectAll('g.seat').each(function(d) {
+                    const gElement = d3Select(this);
+                    console.log(d)
+                    console.log(this)
+                    const circle = gElement.select('circle');
+
+                    const bounds = circle.node().getBoundingClientRect();
+
+                    // const bounds = d3Mouse(circle.node());
+                    console.log(bounds.x,bounds.y)
+                    console.log(x_overlap, y_overlap)
+                    const cx = bounds.x;
+                    const cy = bounds.y;
+
+                    // const cx = +bounds[0];
+                    // const cy = +bounds[1];
+
+                    const isSelected = cx >= selectionBounds.x0 &&
+                                       cx <= selectionBounds.x1 &&
+                                       cy >= selectionBounds.y0 &&
+                                       cy <= selectionBounds.y1;
+                    gElement.classed("seat-selected-zone", isSelected);
+                });
+                this.selectionBox.remove();
+                this.selectionBox = null;
+                this.isSelectingZone = false;
+                
+                this.parent.zoomManager.zoomGlobalEnable();
+
+                this.global.zoom_enable = true;
+            }
+        });
 
         //this.stage.updateEvents(true);
     }
 
 
 }
+
+// TODO test demain
+
+// // Assume 'gElement' is a reference to a <g> element in your SVG
+// const gElement = d3.select("g.seat").node(); // Use .node() to get the DOM element
+
+// // Get the bounding rectangle relative to the viewport
+// const boundingRect = gElement.getBoundingClientRect();
+
+// // Get the SVG element containing the <g> element
+// const svg = gElement.ownerSVGElement;
+
+// // Get the transformation matrix that maps SVG coordinates to screen coordinates
+// const ctm = gElement.getScreenCTM().inverse(); // Inverse to map screen to SVG
+
+// // Convert the bounding rectangle's top-left corner to SVG coordinates
+// const svgPoint = svg.createSVGPoint();
+// svgPoint.x = boundingRect.left;
+// svgPoint.y = boundingRect.top;
+
+// const topLeftSVG = svgPoint.matrixTransform(ctm);
+
+// console.log("Top-left corner in SVG coordinates:", topLeftSVG.x, topLeftSVG.y);
+
+// // Similarly, convert the bottom-right corner if needed
+// svgPoint.x = boundingRect.right;
+// svgPoint.y = boundingRect.bottom;
+
+// const bottomRightSVG = svgPoint.matrixTransform(ctm);
+
+// console.log("Bottom-right corner in SVG coordinates:", bottomRightSVG.x, bottomRightSVG.y);
+
+// // You can now use these coordinates to get the position and size in the SVG coordinate system
+// const svgWidth = bottomRightSVG.x - topLeftSVG.x;
+// const svgHeight = bottomRightSVG.y - topLeftSVG.y;

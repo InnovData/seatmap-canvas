@@ -259,6 +259,16 @@
       opacity: 0.5;
       transform: scale(0.6);
   }
+
+  .selection {
+    fill: rgba(0, 0, 255, 0.1);
+    stroke: blue;
+    stroke-width: 1px;
+  }
+
+  .seat-selected-zone .seat-circle{
+    fill: orange;
+  }
 }
 
 

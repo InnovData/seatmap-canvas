@@ -20,5 +20,6 @@ export interface GlobalModel {
     zoomManager: ZoomManager,
     svg:Svg,
     multi_select:boolean,
-    best_available:boolean
+    best_available:boolean,
+    zoom_enable: boolean
 }

@@ -51,7 +51,8 @@ export class SeatMapCanvas {
             root: this,
             svg: this.svg,
             multi_select: false,
-            best_available: false
+            best_available: false,
+            zoom_enable: true
         };
         d3Select(window).on("keydown.dispatch", function (a, b, c) {
             _self.eventManager.dispatch(EventType.KEYDOWN_SVG, d3Event);

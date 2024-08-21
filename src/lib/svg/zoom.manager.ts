@@ -83,7 +83,9 @@ export default class ZoomManager {
         this._self.eventManager.addEventListener(EventType.KEYUP_SVG, (e: any) => {
             this._self.eventManager.dispatch(EventType.MULTI_SELECT_DISABLE, e);
             d3Event.preventDefault();
-            this.zoomEnable();
+            if (this._self.global.zoom_enable) {
+                this.zoomEnable();
+            }
         });
 
     }
@@ -104,8 +106,13 @@ export default class ZoomManager {
             .on("end", this.animatedFastZoomEnd(this))
             .on("zoom", this.zoomHandFastAnimated(this));
 
-        this._self.svg.node.call(this.zoomTypes.normal);
-        this._self.svg.node.on("dblclick.zoom", null);
+        if (this._self.global.zoom_enable) {
+
+            this.zoomGlobalEnable();
+
+            // this._self.svg.node.call(this.zoomTypes.normal);
+            // this._self.svg.node.on("dblclick.zoom", null);
+        }
     }
 
     zoomEnd(_self: this): any {
@@ -492,9 +499,9 @@ export default class ZoomManager {
 
     }
 
-
     public zoomEnable(): this {
         this._self.svg.node.call(this.zoomTypes.normal);
+        this._self.svg.node.on("dblclick.zoom", null);
         //this._self.svg.node.on('.zoom', null);
         return this;
     }
@@ -508,6 +515,19 @@ export default class ZoomManager {
         return this.zoomLevels[level];
     }
 
+
+    public zoomGlobalDisable (): this {
+        this._self.global.zoom_enable = false;
+        this._self.svg.node.on('.zoom', null);
+        return this;
+    }
+
+    public zoomGlobalEnable (): this {
+        this._self.global.zoom_enable = true;
+        this.zoomEnable();
+        return this;
+    }
+    
     public getActiveZoom() {
         return this.zoomLevels[this.zoomLevel];
     }
