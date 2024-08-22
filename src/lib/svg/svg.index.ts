@@ -115,13 +115,13 @@ export default class Svg extends SvgBase {
         this.node.on("mouseup", () => {
             console.log('up')
             if ( this.isSelectingZone) {
-                const [x, y, width, height] = [
-                    parseFloat( this.selectionBox.attr("x")),
-                    parseFloat( this.selectionBox.attr("y")),
-                    parseFloat( this.selectionBox.attr("width")),
-                    parseFloat( this.selectionBox.attr("height"))
-                ];
-
+                // const [x, y, width, height] = [
+                //     parseFloat( this.selectionBox.attr("x")),
+                //     parseFloat( this.selectionBox.attr("y")),
+                //     parseFloat( this.selectionBox.attr("width")),
+                //     parseFloat( this.selectionBox.attr("height"))
+                // ];
+                const {x, y, width, height} = this.selectionBox.node().getBoundingClientRect();
                 const selectionBounds = {
                     x0: x,
                     y0: y,
@@ -132,15 +132,12 @@ export default class Svg extends SvgBase {
 
                 this.node.selectAll('g.seat').each(function(d) {
                     const gElement = d3Select(this);
-                    console.log(d)
-                    console.log(this)
                     const circle = gElement.select('circle');
 
                     const bounds = circle.node().getBoundingClientRect();
 
                     // const bounds = d3Mouse(circle.node());
-                    console.log(bounds.x,bounds.y)
-                    console.log(x_overlap, y_overlap)
+                    // console.log(x_overlap, y_overlap)
                     const cx = bounds.x;
                     const cy = bounds.y;
 
@@ -168,38 +165,3 @@ export default class Svg extends SvgBase {
 
 
 }
-
-// TODO test demain
-
-// // Assume 'gElement' is a reference to a <g> element in your SVG
-// const gElement = d3.select("g.seat").node(); // Use .node() to get the DOM element
-
-// // Get the bounding rectangle relative to the viewport
-// const boundingRect = gElement.getBoundingClientRect();
-
-// // Get the SVG element containing the <g> element
-// const svg = gElement.ownerSVGElement;
-
-// // Get the transformation matrix that maps SVG coordinates to screen coordinates
-// const ctm = gElement.getScreenCTM().inverse(); // Inverse to map screen to SVG
-
-// // Convert the bounding rectangle's top-left corner to SVG coordinates
-// const svgPoint = svg.createSVGPoint();
-// svgPoint.x = boundingRect.left;
-// svgPoint.y = boundingRect.top;
-
-// const topLeftSVG = svgPoint.matrixTransform(ctm);
-
-// console.log("Top-left corner in SVG coordinates:", topLeftSVG.x, topLeftSVG.y);
-
-// // Similarly, convert the bottom-right corner if needed
-// svgPoint.x = boundingRect.right;
-// svgPoint.y = boundingRect.bottom;
-
-// const bottomRightSVG = svgPoint.matrixTransform(ctm);
-
-// console.log("Bottom-right corner in SVG coordinates:", bottomRightSVG.x, bottomRightSVG.y);
-
-// // You can now use these coordinates to get the position and size in the SVG coordinate system
-// const svgWidth = bottomRightSVG.x - topLeftSVG.x;
-// const svgHeight = bottomRightSVG.y - topLeftSVG.y;
