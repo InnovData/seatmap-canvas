@@ -142,6 +142,7 @@
             legend: true,
             zoom_focus_circle_radius: 0,
             is_polygon: false,
+            selection_zone: true,
             lang: {
                 selectable: "Sélectionnable",
                 non_selectable:  "Non sélectionnable ou réservé",
@@ -194,6 +195,7 @@
             let block_colors = ["#01a5ff", "#fccf4e", "#01a5ff", "#01a5ff"];
             let blocks = []
             let last_x = 0;
+            let seat_id = 0;
             for (let j = 0; j < 4; j++) { // blocks
 
                 let color = block_colors[j];
@@ -205,8 +207,10 @@
                 let randomSeatCount = Math.round((Math.random() * (Math.abs(400 - 200))) + 200)
                 let randomCell = Math.round((Math.random() * (Math.abs(28 - 12))) + 12)
                 let blockTitle = `Block ${j + 1}`;
+                seat_id++;
 
                 for (let k = 0; k < randomSeatCount; k++) { // row
+                    seat_id++;
                     if (k % randomCell === 0) {
                         cell_count = 1;
                         row_count++;
@@ -220,7 +224,7 @@
                     let randomPrice = (Math.floor(Math.random() * (10 - 1 + 1)) + 1) * 10
 
                     let seat = {
-                        id: `s-${k}`,
+                        id: seat_id,
                         x: x,
                         y: y,
                         color: color, // can use item.color from json data
@@ -253,6 +257,7 @@
             }
 
             seatmap.data.replaceData(blocks);
+            //seatmap.selectionManager.setSeatsSelected([2,3,6]);
         }
         const unselectSeat = function () {
             let seatId = $(this).attr('seat-id');

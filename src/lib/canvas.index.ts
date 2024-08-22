@@ -16,6 +16,7 @@ import ZoomManager from "./svg/zoom.manager";
 import EventManager from "./svg/event.manager";
 import {EventType, ZoomLevel} from "./enums/global";
 import WindowManager from "./window.manager";
+import SelectionManager from './svg/selection.manager';
 
 
 export class SeatMapCanvas {
@@ -29,6 +30,7 @@ export class SeatMapCanvas {
     public windowManager: WindowManager;
     public zoomManager: ZoomManager;
     public eventManager: EventManager;
+    public selectionManager: SelectionManager;
     public addEventListener: any;
 
     constructor(public container_selector: any, _config: DefaultsModel) {
@@ -39,6 +41,7 @@ export class SeatMapCanvas {
         this.node = d3Select(container_selector);
         this.windowManager = new WindowManager(this);
         this.zoomManager = new ZoomManager(this);
+        this.selectionManager = new SelectionManager(this);
 
         this.data = new DataModel(this);
 
@@ -69,6 +72,7 @@ export class SeatMapCanvas {
 
         this.windowManager.resizeHandler();
         this.zoomManager.init();
+        this.selectionManager.init();
 
         this.eventManager.addEventListener(EventType.CLICK_ZOOM_OUT, () => this.zoomManager.zoomToVenue());
         this.eventManager.addEventListener(EventType.MULTI_SELECT_ENABLE, () => {

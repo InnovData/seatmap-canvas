@@ -32,6 +32,7 @@ export default class DefaultsModel {
     zoom_out_button: string;
     legend: boolean = false;
     canvas_stageout_control: boolean = true;
+    selection_zone: boolean = false;
     is_polygon: boolean = true;
 
     style: StyleConfig
@@ -55,6 +56,7 @@ export default class DefaultsModel {
 
         this.zoom_focus_circle_radius = config.zoom_focus_circle_radius ? config.zoom_focus_circle_radius : this.zoom_focus_circle_radius;
         this.click_enable_sold_seats = config.click_enable_sold_seats ? config.click_enable_sold_seats : this.click_enable_sold_seats;
+        this.selection_zone = config.selection_zone ? config.selection_zone : this.selection_zone;
         this.max_zoom = config.max_zoom ? config.max_zoom : this.max_zoom;
 
         this.resizable = config.resizable ? config.resizable : this.resizable;
