@@ -18,15 +18,15 @@ export default class ZoomOutBg extends SvgBase {
 
     constructor(public parent: Svg) {
         super(parent);
-        this.global.eventManager.addEventListener(EventType.RESIZE_WINDOW, (win: any) => {
+        // this.global.eventManager.addEventListener(EventType.RESIZE_WINDOW, (win: any) => {
 
-            this.node
-                .attr("width", win.width)
-                .attr("height", win.height)
-                .on("click.zoomout", () => {
-                    this.global.eventManager.dispatch(EventType.CLICK_ZOOM_OUT, this);
-                });
-        })
+        //     this.node
+        //         .attr("width", win.width)
+        //         .attr("height", win.height)
+        //         .on("click.zoomout", () => {
+        //             this.global.eventManager.dispatch(EventType.CLICK_ZOOM_OUT, this);
+        //         });
+        // })
     }
 
     update() {

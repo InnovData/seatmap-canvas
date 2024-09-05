@@ -51,6 +51,7 @@ export class SeatMapCanvas {
             config: this.config,
             data: this.data,
             zoomManager: this.zoomManager,
+            selectionManager: this.selectionManager,
             root: this,
             svg: this.svg,
             multi_select: false,

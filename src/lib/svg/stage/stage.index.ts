@@ -7,7 +7,7 @@ import Blocks from "./blocks/blocks.index";
 import Svg from "../svg.index";
 import SvgBase from "../svg.base";
 import {dom} from "../../decorators/dom";
-import BlocksSearchCircle from "./blocks.search-circle";
+// import BlocksSearchCircle from "./blocks.search-circle";
 import ImageBg from './imagebg.index';
 
 
@@ -21,7 +21,6 @@ export default class Stage extends SvgBase {
 
     public blocks: Blocks;
     public img: ImageBg;
-    public searchCircle:BlocksSearchCircle;
 
     constructor(public parent: Svg) {
         super(parent);
@@ -36,8 +35,8 @@ export default class Stage extends SvgBase {
         this.blocks = new Blocks(this);
         this.addChild(this.blocks);
 
-        this.searchCircle = new BlocksSearchCircle(this);
-        this.addChild(this.searchCircle);
+        // this.searchCircle = new BlocksSearchCircle(this);
+        // this.addChild(this.searchCircle);
 
 
         this.updateChilds();

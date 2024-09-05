@@ -24,6 +24,7 @@ export class StyleConfig {
 export default class DefaultsModel {
     min_zoom: number = 0.1;
     max_zoom: number = 1.9;
+    step_zoom: number = 0.3;
     animation_speed: number = 600;
     resizable: boolean = false;
     container: any = null;
@@ -33,6 +34,7 @@ export default class DefaultsModel {
     legend: boolean = false;
     canvas_stageout_control: boolean = true;
     selection_zone: boolean = false;
+    wheel_zoom_disabled: boolean = false;
     is_polygon: boolean = true;
 
     style: StyleConfig
@@ -57,8 +59,10 @@ export default class DefaultsModel {
         this.zoom_focus_circle_radius = config.zoom_focus_circle_radius ? config.zoom_focus_circle_radius : this.zoom_focus_circle_radius;
         this.click_enable_sold_seats = config.click_enable_sold_seats ? config.click_enable_sold_seats : this.click_enable_sold_seats;
         this.selection_zone = config.selection_zone ? config.selection_zone : this.selection_zone;
+        this.wheel_zoom_disabled = config.wheel_zoom_disabled ? config.wheel_zoom_disabled : this.wheel_zoom_disabled;
+        this.step_zoom = config.step_zoom ? config.step_zoom : this.step_zoom;
         this.max_zoom = config.max_zoom ? config.max_zoom : this.max_zoom;
-
+        
         this.resizable = config.resizable ? config.resizable : this.resizable;
         this.zoom_out_button = config.zoom_out_button ? config.zoom_out_button : ".zoom-out-button";
         this.legend = config.legend == false ? config.legend : true;

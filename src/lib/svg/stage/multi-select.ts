@@ -58,50 +58,50 @@ export default class MultiSelect extends SvgBase {
 
     afterGenerate() {
 
-        this.parent.stage.node.on("mousedown", () => {
-            if (!this.global.multi_select) return;
-            // console.log("e", e);
-            // console.log("mouse", mouse);
-            // console.log("mouse", mouse);
-            let mouse = d3Mouse(this.parent.stage.node.node());
-            if (this.start) {
-                this.start = false;
+        // this.parent.stage.node.on("mousedown", () => {
+        //     if (!this.global.multi_select) return;
+        //     // console.log("e", e);
+        //     // console.log("mouse", mouse);
+        //     // console.log("mouse", mouse);
+        //     let mouse = d3Mouse(this.parent.stage.node.node());
+        //     if (this.start) {
+        //         this.start = false;
 
-                this.points.end = mouse;
-                let width = this.points.end[0] - this.points.start[0];
-                let height = this.points.end[1] - this.points.start[1];
+        //         this.points.end = mouse;
+        //         let width = this.points.end[0] - this.points.start[0];
+        //         let height = this.points.end[1] - this.points.start[1];
 
 
-                this.rect.node.attr("width", width);
-                this.rect.node.attr("height", height);
-                this.rect.node.attr("x", this.points.start[0]);
-                this.rect.node.attr("y", this.points.end[0]);
+        //         this.rect.node.attr("width", width);
+        //         this.rect.node.attr("height", height);
+        //         this.rect.node.attr("x", this.points.start[0]);
+        //         this.rect.node.attr("y", this.points.end[0]);
 
-                this.points.start = null;
-                this.points.end = null;
-            } else {
-                this.start = true;
-                this.points.start = mouse;
+        //         this.points.start = null;
+        //         this.points.end = null;
+        //     } else {
+        //         this.start = true;
+        //         this.points.start = mouse;
 
-            }
+        //     }
 
-        });
-        this.parent.stage.node.on("mousemove", () => {
-            if (this.global.multi_select) {
-                if (this.start) {
-                    let mouse = d3Mouse(this.parent.stage.node.node());
-                    let width = mouse[0] - this.points.start[0];
-                    let height = mouse[1] - this.points.start[1];
+        // });
+        // this.parent.stage.node.on("mousemove", () => {
+        //     if (this.global.multi_select) {
+        //         if (this.start) {
+        //             let mouse = d3Mouse(this.parent.stage.node.node());
+        //             let width = mouse[0] - this.points.start[0];
+        //             let height = mouse[1] - this.points.start[1];
 
-                    this.points.end = mouse;
+        //             this.points.end = mouse;
 
-                    this.rect.node.attr("width", width);
-                    this.rect.node.attr("height", height);
-                    this.rect.node.attr("x", this.points.start[0]);
-                    this.rect.node.attr("y", this.points.end[0]);
-                }
-            }
+        //             this.rect.node.attr("width", width);
+        //             this.rect.node.attr("height", height);
+        //             this.rect.node.attr("x", this.points.start[0]);
+        //             this.rect.node.attr("y", this.points.end[0]);
+        //         }
+        //     }
 
-        });
+        // });
     }
 }

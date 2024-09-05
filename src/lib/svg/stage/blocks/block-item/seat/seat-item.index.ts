@@ -41,16 +41,39 @@ export class SeatItem extends SvgBase {
     }
 
     public select(): this {
-        this.item.selected = true;
-        this.node.classed("selected", true);
-        this.check.show();
+        if (this.global.config.selection_zone) {
+            const currentSeats = this.global.selectionManager.getSeatsSelected().map((item) => item.toString());
+
+            if (currentSeats.includes(this.item.id.toString())) {
+                this.global.selectionManager.setSeatsSelected(currentSeats.filter((item) => item != this.item.id.toString()));
+            } else {
+                currentSeats.push(this.item.id);
+                this.global.selectionManager.setSeatsSelected(currentSeats);
+            }
+        } else {
+            this.item.selected = true;
+            this.node.classed("selected", true);
+            this.check.show();
+        }
         return this;
     }
 
     public unSelect(): this {
-        this.item.selected = false;
-        this.node.classed("selected", false);
-        this.check.hide();
+        if (this.global.config.selection_zone) {
+
+            const currentSeats = this.global.selectionManager.getSeatsSelected();
+            if (currentSeats.includes(this.item.id.toString())) {
+                this.global.selectionManager.setSeatsSelected(currentSeats.filter((item) => item.toString() != this.item.id.toString()));
+            } else {
+                currentSeats.push(this.item.id);
+                this.global.selectionManager.setSeatsSelected(currentSeats);
+            }
+
+        } else {
+            this.item.selected = false;
+            this.node.classed("selected", false);
+            this.check.hide();
+        }
         return this;
     }
 
@@ -75,11 +98,16 @@ export class SeatItem extends SvgBase {
     }
 
     public hoverOn () {
-        this.node.classed("hover", true);
+        // this.node.classed("hover", true);
+        this.circle.node.style("fill", this.global.config.style.seat.hover);
+        this.circle.node.style("transform", 'scale(1.2)');
+
     }
 
     public hoverOut () {
-        this.node.classed("hover", false);
+        // this.node.classed("hover", false);
+        this.circle.node.style("fill", '');
+        this.circle.node.style("transform", '');
     }
 
     public setCustomData(data: any = {}): this {
@@ -117,7 +145,6 @@ export class SeatItem extends SvgBase {
 
         return this;
     }
-
     afterGenerate(){
         // this.setColor(this.getColor());
         if(this.item.selected){
@@ -127,4 +154,5 @@ export class SeatItem extends SvgBase {
         }
 
     }
+
 }

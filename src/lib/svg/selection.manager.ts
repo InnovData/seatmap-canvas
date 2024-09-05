@@ -82,8 +82,8 @@ export default class SelectionManager {
 
                     const bounds = circle.node().getBoundingClientRect();
 
-                    const cx = bounds.x;
-                    const cy = bounds.y;
+                    const cx = bounds.x+ (bounds.width/2);
+                    const cy = bounds.y+ (bounds.height/2);
 
 
                     const isSelected = cx >= selectionBounds.x0 &&

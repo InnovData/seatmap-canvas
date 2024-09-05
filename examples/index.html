@@ -113,6 +113,24 @@
                     Zoom to coord
                 </button>
                 <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
+                        id="zoom-plus-btn"
+                        data-block-id="block-2">
+                    <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                    Zoom plus
+                </button>
+                <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
+                        id="zoom-moins-btn"
+                        data-block-id="block-2">
+                    <i class="fa-solid fa-magnifying-glass-moins mr-2"></i>
+                    Zoom moins
+                </button>
+                <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
+                        id="zoom-step-btn"
+                        data-block-id="block-2">
+                    <i class="fa-solid fa-magnifying-glass-step mr-2"></i>
+                    Zoom step
+                </button>
+                <button class="border text-left border-slate-500 bg-slate-100 text-slate-800 py-1  px-3 rounded-md hover:bg-slate-200"
                         id="update-custom-data-btn"
                         data-block-id="block-2">
                     <i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
@@ -122,14 +140,6 @@
         </div>
         <div id="seats_container" class="w-full flex-1 h-full"></div>
 
-        <div class="flex flex-col w-52 flex-0 border-l">
-            <div class="text-center w-full text-sm p-2 bg-gray-100 border-b">Selected Seats</div>
-            <table class="table-auto text-sm">
-                <tbody id="selected-seats">
-
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -141,8 +151,10 @@
         let seatmap = new SeatMapCanvas("#seats_container", {
             legend: true,
             zoom_focus_circle_radius: 0,
+            step_zoom: 0.1,
             is_polygon: false,
             selection_zone: true,
+            wheel_zoom_disabled: false,
             lang: {
                 selectable: "Sélectionnable",
                 non_selectable:  "Non sélectionnable ou réservé",
@@ -150,7 +162,7 @@
             },
             style: {
                 seat: {
-                    hover: '#8fe100',
+                    hover: '#000',
                     color: '#f0f7fa',
                     selected: '#8fe100',
                     check_icon_color: '#fff',
@@ -175,7 +187,6 @@
 
         seatmap.eventManager.addEventListener("SEAT.CLICK", (seat) => {
             if (!seat.isSelected() && seat.item.salable === true) {
-                console.log('sssss')
                 seat.select()
             } else {
                 seat.unSelect()
@@ -338,9 +349,18 @@
             let blockId = $(this).attr('data-block-id');
             seatmap.zoomManager.zoomToBlock(blockId);
         });
+        $("#zoom-plus-btn").on("click", function (a) {
+            seatmap.zoomManager.zoomPlus();
+        });
+        $("#zoom-moins-btn").on("click", function (a) {
+            seatmap.zoomManager.zoomMinus();
+        });
         $("#get-selected-seats").on("click", function (a) {
             let selectedSeats = seatmap.data.getSelectedSeats();
             console.log(selectedSeats)
+        });
+        $("#zoom-step-btn").on("click", function (a) {
+            seatmap.zoomManager.zoomToStep();
         });
 
         // $(".unselect-seat").on("click", function (a) {
@@ -370,6 +390,8 @@
             })
         });
     });
+
+    
 </script>
 </body>
 </html>

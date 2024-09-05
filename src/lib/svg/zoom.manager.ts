@@ -96,16 +96,28 @@ export default class ZoomManager {
             .on("end", this.zoomEnd(this))
             .on("zoom", this.zoomHand(this));
 
+        if (this._self.config.wheel_zoom_disabled) {
+            this.zoomTypes.normal.wheelDelta(() =>(0));
+        }
+
         this.zoomTypes.animated = d3Zoom()
             .scaleExtent([this._self.config.min_zoom, this._self.config.max_zoom])
             .on("end", this.animatedZoomEnd(this))
             .on("zoom", this.zoomHandAnimated(this));
+
+        if (this._self.config.wheel_zoom_disabled) {
+            this.zoomTypes.animated.wheelDelta(() =>(0));
+        }
 
         this.zoomTypes.fastAnimated = d3Zoom()
             .scaleExtent([this._self.config.min_zoom, this._self.config.max_zoom])
             .on("end", this.animatedFastZoomEnd(this))
             .on("zoom", this.zoomHandFastAnimated(this));
 
+        if (this._self.config.wheel_zoom_disabled) {
+            this.zoomTypes.fastAnimated.wheelDelta(() =>(0));
+        }
+    
         if (this._self.global.zoom_enable) {
 
             this.zoomGlobalEnable();
@@ -498,6 +510,50 @@ export default class ZoomManager {
         }
 
     }
+
+    public zoomPlus(animation: boolean = true, fastAnimated: boolean = false) {
+        const scale = this.scale.k +this._self.config.step_zoom; 
+        this.scale.k = scale > this._self.config.max_zoom ? this._self.config.max_zoom : scale;
+        
+        if (animation) {
+            this._self.svg.node.interrupt().call(this.zoomTypes.animated.scaleTo, scale);
+        } else {
+            this._self.svg.node.interrupt().call(this.zoomTypes.normal.scaleTo, scale);
+        }
+        this.zoomLevel = ZoomLevel.SEAT;
+        this.dispatchZoomEvent();
+
+    }
+
+    public zoomToStep(animation: boolean = true, step: number = 0.1) {
+        const scale = this.scale.k + step; 
+        this.scale.k = scale > this._self.config.max_zoom ? this._self.config.max_zoom : scale;
+        
+        if (animation) {
+            this._self.svg.node.interrupt().call(this.zoomTypes.animated.scaleTo, scale);
+        } else {
+            this._self.svg.node.interrupt().call(this.zoomTypes.normal.scaleTo, scale);
+        }
+        this.zoomLevel = ZoomLevel.SEAT;
+        this.dispatchZoomEvent();
+
+    }
+
+
+    public zoomMinus(animation: boolean = true, fastAnimated: boolean = false) {
+        const scale = this.scale.k -this._self.config.step_zoom; 
+        this.scale.k = scale < this._self.config.min_zoom ? this._self.config.min_zoom : scale;
+
+        if (animation) {
+            this._self.svg.node.interrupt().call(this.zoomTypes.animated.scaleTo, scale);
+        } else {
+            this._self.svg.node.interrupt().call(this.zoomTypes.normal.scaleTo, scale);
+        }
+        this.zoomLevel = ZoomLevel.SEAT;
+        this.dispatchZoomEvent();
+
+    }
+    
 
     public zoomEnable(): this {
         this._self.svg.node.call(this.zoomTypes.normal);

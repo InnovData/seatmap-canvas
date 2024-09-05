@@ -26,10 +26,12 @@ export default class Seats extends SvgBase {
         this.global.eventManager.addEventListener(EventType.MOUSEENTER_SEAT, (seat: SeatItem) => {
             if (this.global.multi_select) return;
             seat.hoverOn();
+            // seat.setStyle(seat.getStyle(SeatAction.HOVER));
             //this.global.zoomManager.zoomDisable();
         });
         this.global.eventManager.addEventListener(EventType.MOUSELEAVE_SEAT, (seat: SeatItem) => {
             seat.hoverOut();
+            // seat.setStyle(seat.getStyle());
             //this.global.zoomManager.zoomEnable();
         });
 

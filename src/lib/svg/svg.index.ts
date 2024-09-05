@@ -13,7 +13,6 @@ import {dom} from "../decorators/dom";
 import {EventType, ZoomLevel} from "../enums/global";
 import ZoomOutBg from "./zoom-out.bg";
 import Legend from "./legend";
-import Tooltip from "./tooltip";
 
 
 
@@ -28,7 +27,6 @@ export default class Svg extends SvgBase {
     public stage: Stage;
     public zoomOutBg: ZoomOutBg;
     public legend: Legend;
-    public tooltip: Tooltip;
 
 
     constructor(public parent: SeatMapCanvas) {
@@ -48,7 +46,7 @@ export default class Svg extends SvgBase {
             this.legend = new Legend(this).addToParent();
         }
 
-        this.tooltip = new Tooltip(this).addToParent();
+        // this.tooltip = new Tooltip(this).addToParent();
 
 
         this.updateChilds();
@@ -58,12 +56,12 @@ export default class Svg extends SvgBase {
             this.legend.node.raise();
         }
 
-        this.tooltip.node.raise();
+        // this.tooltip.node.raise();
 
-        this.node.on("mousemove", () => {
-            let cor = d3Mouse(this.stage.node.node());
-            this.parent.eventManager.dispatch(EventType.MOUSE_MOVE, cor);
-        })
+        // this.node.on("mousemove", () => {
+        //     let cor = d3Mouse(this.stage.node.node());
+        //     this.parent.eventManager.dispatch(EventType.MOUSE_MOVE, cor);
+        // })
 
     }
 
