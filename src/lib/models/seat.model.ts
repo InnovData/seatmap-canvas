@@ -13,6 +13,7 @@ export default class SeatModel extends ModelBase {
     x: number;
     y: number;
     title?: string;
+    ranger?: string;
     selected: boolean;
     color: string;
     block: BlockModel;
@@ -33,6 +34,7 @@ export default class SeatModel extends ModelBase {
         this.x = item.x;
         this.y = item.y;
         this.title = item.title || null;
+        this.ranger = item.ranger || null;
         this.color = item.color || null;
         this.block = item.block;
         this.note = item.note || null;

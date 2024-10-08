@@ -42,7 +42,7 @@ export default class Tooltip extends SvgBase {
             if (this.global.multi_select) return;
             if (this.activeSeat !== seat && seat.item.title) {
                 this.activeSeat = seat;
-                this.setTitle(seat.item.title.split("\n"));
+                this.setTitle(`${seat.item.ranger}${seat.item.title}`.split('\n'));
                 this.title.generateTitle();
             }
         });
@@ -78,16 +78,18 @@ export default class Tooltip extends SvgBase {
 
         this.parent.node.on("mousemove.seat", function () {
             if (_self.global.multi_select) return;
-            if (_self.global.zoomManager.zoomLevel === ZoomLevel.SEAT && _self.activeSeat !== null) {
+            // if (_self.global.zoomManager.zoomLevel === ZoomLevel.SEAT && _self.activeSeat !== null) {
+            if (_self.activeSeat !== null) {
                 // @ts-ignore
                 let cor = d3Mouse(this);
 
                 let x = cor[0] - (_self.global.config.style.tooltip.width / 2);
                 let y = cor[1] - (_self.global.config.style.tooltip.height + (_self.global.config.style.seat.radius) + 2);
                 _self.node.attr("transform", "translate(" + [x, y] + ")").attr("opacity", 1);
-            } else {
-                _self.node.attr("opacity", 0);
-            }
+            } 
+            // else {
+            //     _self.node.attr("opacity", 0);
+            // }
         })
     }
 }

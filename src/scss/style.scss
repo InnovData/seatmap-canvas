@@ -31,9 +31,13 @@
   }
 }
 
-.seatmap-tooltip {
-  display: none;
+.seatmap-tooltip{
+  fill: #fff;
 }
+
+// .seatmap-tooltip {
+//   display: none;
+// }
 .seatmap-svg {
   position: relative;
   width: 100%;

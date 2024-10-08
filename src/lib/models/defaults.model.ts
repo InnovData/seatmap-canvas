@@ -35,6 +35,7 @@ export default class DefaultsModel {
     canvas_stageout_control: boolean = true;
     selection_zone: boolean = false;
     wheel_zoom_disabled: boolean = false;
+    tooltip_visible: boolean = false;
     is_polygon: boolean = true;
 
     style: StyleConfig
@@ -68,7 +69,7 @@ export default class DefaultsModel {
         this.legend = config.legend == false ? config.legend : true;
         this.canvas_stageout_control = config.canvas_stageout_control == false ? config.canvas_stageout_control : true;
         this.is_polygon = config.is_polygon == false ? config.is_polygon : true;
-
+        this.tooltip_visible = config.tooltip_visible ? config.tooltip_visible : this.tooltip_visible;
 
         this.style = new StyleConfig()
 

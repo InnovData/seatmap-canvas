@@ -23,5 +23,6 @@ export interface GlobalModel {
     svg:Svg,
     multi_select:boolean,
     best_available:boolean,
-    zoom_enable: boolean
+    zoom_enable: boolean,
+    tooltip_visible: boolean
 }
