@@ -42,7 +42,7 @@ export default class Tooltip extends SvgBase {
             if (this.global.multi_select) return;
             if (this.activeSeat !== seat && seat.item.title) {
                 this.activeSeat = seat;
-                this.setTitle(`${seat.item.ranger}${seat.item.title}`.split('\n'));
+                this.setTitle(`${seat.parent && seat.parent.item && seat.parent.item.title ? seat.parent.item.title : ''} ${seat.item.ranger}${seat.item.title}`.split('\n'));
                 this.title.generateTitle();
             }
         });
