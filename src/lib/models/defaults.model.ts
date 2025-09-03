@@ -49,6 +49,7 @@ export default class DefaultsModel {
 
     imageBg: {
         url: string,
+        svg: string,
         width: number,
         height: number,
         x: number,
@@ -94,7 +95,8 @@ export default class DefaultsModel {
             y: config.imageBg && config.imageBg.y || 0,
             width: config.imageBg && config.imageBg.width || 0,
             height: config.imageBg && config.imageBg.height || 0,
-            url: config.imageBg && config.imageBg.url || ''
+            url: config.imageBg && config.imageBg.url || '',
+            svg: config.imageBg && config.imageBg.svg || ''
         };
 
     }
